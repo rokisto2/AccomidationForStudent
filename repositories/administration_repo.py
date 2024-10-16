@@ -1,11 +1,21 @@
 from models import Administration
+from passlib.context import CryptContext
+
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 class AdministrationRepository:
     def __init__(self, session):
         self.session = session
 
-    def add_administration(self, first_name, last_name, dormitory_id, contributions=0):
-        admin = Administration(first_name=first_name, last_name=last_name, dormitory_id=dormitory_id, contributions=contributions)
+    def add_administration(self, first_name, last_name, dormitory_id, password, contributions=0):
+        hashed_password = pwd_context.hash(password)
+        admin = Administration(
+            first_name=first_name,
+            last_name=last_name,
+            dormitory_id=dormitory_id,
+            contributions=contributions,
+            hashed_password=hashed_password
+        )
         self.session.add(admin)
         self.session.commit()
 

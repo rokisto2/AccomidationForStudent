@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, String, Date, Boolean
 from sqlalchemy.orm import relationship
 from .base import Base
 
-
 class Student(Base):
     __tablename__ = 'students'
 
@@ -12,12 +11,13 @@ class Student(Base):
     birth_date = Column(Date, nullable=False)
     contact_info = Column(String(100))
     course = Column(Integer, nullable=False)
-    is_non_local = Column(Boolean, nullable=False)  # True для иногородних студентов
+    is_non_local = Column(Boolean, nullable=False)  # True for non-local students
+    hashed_password = Column(String, nullable=False)  # New field for password
 
-    # Связь с актами нарушений
+    # Relationship with violations
     violations = relationship('Violation', back_populates='student')
 
-    # Связь с заселением
+    # Relationship with accommodations
     accommodations = relationship('Accommodation', back_populates='student')
 
     def __repr__(self):

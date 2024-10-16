@@ -1,21 +1,24 @@
+# routers/administration_router.py
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from db_manager_factory import get_db_manager
 
 router = APIRouter()
-
 db_manager = get_db_manager()
 
 class AdministrationCreate(BaseModel):
-    name: str
-    assigned_dormitory_id: int
-    work_done: str  # отработки
+    first_name: str
+    last_name: str
+    dormitory_id: int
+    password: str  # New field for password
+    contributions: int = 0
 
 class AdministrationResponse(BaseModel):
     id: int
-    name: str
-    assigned_dormitory_id: int
-    work_done: str
+    first_name: str
+    last_name: str
+    dormitory_id: int
+    contributions: int
 
     class Config:
         orm_mode = True
@@ -27,7 +30,7 @@ def create_administration(administration: AdministrationCreate):
 
 @router.get("/", response_model=list[AdministrationResponse])
 def read_administrations():
-    return db_manager.administrations.get_all_administrations()
+    return db_manager.administrations.get_all_administrators()
 
 @router.get("/{administration_id}", response_model=AdministrationResponse)
 def read_administration(administration_id: int):
