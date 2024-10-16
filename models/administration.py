@@ -1,7 +1,7 @@
-# models/administration.py
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 from .base import Base
+
 
 class Administration(Base):
     __tablename__ = 'administration'
@@ -9,6 +9,7 @@ class Administration(Base):
     id = Column(Integer, primary_key=True)
     first_name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
+    contact_info = Column(String, unique=True, index=True)
     dormitory_id = Column(Integer, ForeignKey('dormitories.id'), nullable=False)
     contributions = Column(Integer, default=0)  # Contributions
     hashed_password = Column(String, nullable=False)  # New field for password

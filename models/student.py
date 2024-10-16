@@ -1,3 +1,4 @@
+
 from sqlalchemy import Column, Integer, String, Date, Boolean
 from sqlalchemy.orm import relationship
 from .base import Base
@@ -5,14 +6,14 @@ from .base import Base
 class Student(Base):
     __tablename__ = 'students'
 
-    id = Column(Integer, primary_key=True)
-    first_name = Column(String(50), nullable=False)
-    last_name = Column(String(50), nullable=False)
-    birth_date = Column(Date, nullable=False)
-    contact_info = Column(String(100))
-    course = Column(Integer, nullable=False)
-    is_non_local = Column(Boolean, nullable=False)  # True for non-local students
-    hashed_password = Column(String, nullable=False)  # New field for password
+    id = Column(Integer, primary_key=True, index=True)
+    first_name = Column(String, index=True)
+    last_name = Column(String, index=True)
+    birth_date = Column(Date)
+    contact_info = Column(String, unique=True, index=True)
+    course = Column(Integer)
+    is_non_local = Column(Boolean, default=False)
+    hashed_password = Column(String)  # New field for hashed password
 
     # Relationship with violations
     violations = relationship('Violation', back_populates='student')

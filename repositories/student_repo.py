@@ -27,6 +27,9 @@ class StudentRepository:
     def get_student_by_id(self, student_id):
         return self.session.query(Student).get(student_id)
 
+    def get_student_by_username(self, username: str) -> Student:
+        return self.session.query(Student).filter(Student.contact_info == username).first()
+
     def update_student(self, student_id, **kwargs):
         student = self.get_student_by_id(student_id)
         if student:

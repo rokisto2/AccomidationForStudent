@@ -9,6 +9,7 @@ db_manager = get_db_manager()
 class AdministrationCreate(BaseModel):
     first_name: str
     last_name: str
+    contact_info: str
     dormitory_id: int
     password: str  # New field for password
     contributions: int = 0
@@ -17,6 +18,7 @@ class AdministrationResponse(BaseModel):
     id: int
     first_name: str
     last_name: str
+    contact_info: str
     dormitory_id: int
     contributions: int
 
@@ -26,7 +28,7 @@ class AdministrationResponse(BaseModel):
 @router.post("/", response_model=AdministrationResponse)
 def create_administration(administration: AdministrationCreate):
     db_manager.administrations.add_administration(**administration.dict())
-    return db_manager.administrations.get_all_administrations()[-1]
+    return db_manager.administrations.get_all_administrators()[-1]
 
 @router.get("/", response_model=list[AdministrationResponse])
 def read_administrations():
