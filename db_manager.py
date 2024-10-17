@@ -12,7 +12,7 @@ class DBManager:
     def __init__(self, user, password, host, port, db_name):
         db_url = f"mysql+pymysql://{user}:{password}@{host}:{port}/{db_name}"
         self.engine = create_engine(db_url)
-        Base.metadata.create_all(self.engine)
+        Base.metadata.create_all(self.engine, )
         self.Session = sessionmaker(bind=self.engine)
         self.session = self.Session()
 
