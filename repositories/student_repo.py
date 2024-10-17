@@ -7,7 +7,7 @@ class StudentRepository:
     def __init__(self, session):
         self.session = session
 
-    def add_student(self, first_name, last_name, birth_date, contact_info, course, is_non_local, password):
+    def add_student(self, first_name, last_name, birth_date, contact_info, course, is_non_local, password, gender):
         hashed_password = pwd_context.hash(password)
         student = Student(
             first_name=first_name,
@@ -16,7 +16,8 @@ class StudentRepository:
             contact_info=contact_info,
             course=course,
             is_non_local=is_non_local,
-            hashed_password=hashed_password
+            hashed_password=hashed_password,
+            gender = gender
         )
         self.session.add(student)
         self.session.commit()

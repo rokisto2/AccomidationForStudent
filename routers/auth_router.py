@@ -5,8 +5,15 @@ from auth import authenticate_user, create_access_token, ACCESS_TOKEN_EXPIRE_MIN
 
 router = APIRouter()
 
+
 @router.post("/token")
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    if not form_data.scopes:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Scopes are required",
+        )
+
     user = authenticate_user(form_data.username, form_data.password, form_data.scopes[0])
     if not user:
         raise HTTPException(

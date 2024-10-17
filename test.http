@@ -1,4 +1,3 @@
-
 POST http://127.0.0.1:8000/api/students/
 Content-Type: application/json
 
@@ -9,19 +8,12 @@ Content-Type: application/json
   "contact_info": "john.doe@example.com",
   "course": 1,
   "is_non_local": true,
-  "password": "student_password"
+  "password": "student_password",
+  "gender": "male"
 }
-
 
 ###
 
-# curl -X POST "http://127.0.0.1:8000/api/administration/" -H "Content-Type: application/json" -d '{
-#  "first_name": "Jane",
-#  "last_name": "Smith",
-#  "dormitory_id": 1,
-#  "password": "admin_password",
-#  "contributions": 0
-#}'
 POST http://127.0.0.1:8000/api/administration/
 Content-Type: application/json
 
@@ -36,23 +28,18 @@ Content-Type: application/json
 
 ###
 
-# curl -X POST "http://127.0.0.1:8000/api/auth/token" -H "Content-Type: application/x-www-form-urlencoded" -d "username=john.doe@example.com&password=student_password&scope=student"
 POST http://127.0.0.1:8000/api/auth/token
 Content-Type: application/x-www-form-urlencoded
 
-username = john.doe@example.com &
-password = student_password &
-scope = student
+username=john.doe@example.com&password=student_password&scope=student
 
 ###
 
-# curl -X POST "http://127.0.0.1:8000/api/auth/token" -H "Content-Type: application/x-www-form-urlencoded" -d "username=jane.smith@example.com&password=admin_password&scope=administrator"
 POST http://127.0.0.1:8000/api/auth/token
 Content-Type: application/x-www-form-urlencoded
 
-username = Smith.doe@example.com &
-password = admin_password &
-scope = administrator
+username=Smith.doe@example.com&password=admin_password&scope=administrator
 
 ###
 
+GET http://127.0.0.1:8000/api/students/

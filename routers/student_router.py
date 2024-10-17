@@ -13,7 +13,8 @@ class StudentCreate(BaseModel):
     contact_info: str
     course: int
     is_non_local: bool
-    password: str  # New field for password
+    password: str
+    gender: str
 
 class StudentResponse(BaseModel):
     id: int
@@ -23,6 +24,7 @@ class StudentResponse(BaseModel):
     contact_info: str
     course: int
     is_non_local: bool
+    gender: str
 
     class Config:
         orm_mode = True
