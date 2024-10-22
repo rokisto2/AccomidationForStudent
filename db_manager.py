@@ -7,6 +7,7 @@ from repositories import RoomRepository
 from repositories import ViolationRepository
 from repositories import AdministrationRepository
 from repositories import AccommodationRepository
+from repositories import DeaneryStaffRepository
 
 class DBManager:
     def __init__(self, user, password, host, port, db_name):
@@ -23,6 +24,7 @@ class DBManager:
         self.violations = ViolationRepository(self.session)
         self.administrations = AdministrationRepository(self.session)
         self.accommodations = AccommodationRepository(self.session)
+        self.deanery_staff = DeaneryStaffRepository(self.session)
 
     def close(self):
         self.session.close()

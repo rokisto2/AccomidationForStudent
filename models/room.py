@@ -8,6 +8,7 @@ class RoomTypeEnum(enum.Enum):
     female = "female"
     family = "family"
 
+
 class Room(Base):
     __tablename__ = 'rooms'
 

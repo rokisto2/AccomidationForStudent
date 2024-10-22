@@ -21,11 +21,16 @@ def verify_password(plain_password, hashed_password):
 def get_password_hash(password):
     return pwd_context.hash(password)
 
+
 def authenticate_user(username: str, password: str, user_type: str):
     if user_type == "student":
         user = db_manager.students.get_student_by_username(username)
-    else:
+    elif user_type == "administrator":
         user = db_manager.administrations.get_administration_by_username(username)
+    elif user_type == "deanery_staff":
+        user = db_manager.deanery_staff.get_deanery_staff_by_username(username)
+    else:
+        return False
 
     if not user or not verify_password(password, user.hashed_password):
         return False
