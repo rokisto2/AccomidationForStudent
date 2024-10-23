@@ -2,6 +2,9 @@ from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from db_manager_factory import get_db_manager
 
+from algoritms import distributeStudents
+
+
 router = APIRouter()
 
 db_manager = get_db_manager()
@@ -48,3 +51,9 @@ def delete_accommodation(accommodation_id: int):
         raise HTTPException(status_code=404, detail="Accommodation not found")
     db_manager.accommodations.delete_accommodation(accommodation_id)
     return accommodation
+
+@router.post("/distribute", response_model=list[AccommodationResponse])
+def distribute_students():
+    with db_manager.session() as session:
+        accommodations = distributeStudents.distribute_students(session)
+        return accommodations

@@ -17,7 +17,7 @@ class StudentRepository:
             course=course,
             is_non_local=is_non_local,
             hashed_password=hashed_password,
-            gender = gender
+            gender=gender
         )
         self.session.add(student)
         self.session.commit()
@@ -43,3 +43,6 @@ class StudentRepository:
         if student:
             self.session.delete(student)
             self.session.commit()
+
+    def get_sorted_students(self):
+        return self.session.query(Student).order_by(Student.course, Student.violations).all()
