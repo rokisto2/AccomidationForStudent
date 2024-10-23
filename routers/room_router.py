@@ -9,12 +9,14 @@ db_manager = get_db_manager()
 class RoomCreate(BaseModel):
     dormitory_id: int
     room_type: str
+    room_number: int
     bed_count: int
 
 class RoomResponse(BaseModel):
     id: int
     dormitory_id: int
     room_type: str
+    room_number: int
     bed_count: int
 
     class Config:

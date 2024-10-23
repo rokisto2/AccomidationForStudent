@@ -3,6 +3,13 @@ from alembic import context
 from alembic.context import config
 from sqlalchemy import engine_from_config
 
+import sys
+import os
+
+# Add the directory containing the config module to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+
 from config import settings
 from models.base import Base
 from models import *  # Импортируйте все модели

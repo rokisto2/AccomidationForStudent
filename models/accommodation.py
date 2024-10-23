@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, ForeignKey, Date
 from sqlalchemy.orm import relationship
 from .base import Base
 
-
 class Accommodation(Base):
     __tablename__ = 'accommodations'
 

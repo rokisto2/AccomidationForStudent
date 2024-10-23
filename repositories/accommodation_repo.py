@@ -1,10 +1,12 @@
 from models import Accommodation
+from datetime import datetime, timedelta
+
 
 class AccommodationRepository:
     def __init__(self, session):
         self.session = session
 
-    def add_accommodation(self, student_id, room_id, date_from, date_to=None):
+    def add_accommodation(self, student_id, room_id, date_from = datetime.today(), date_to=datetime.today()+timedelta(days=365)):
         accommodation = Accommodation(student_id=student_id, room_id=room_id, date_from=date_from, date_to=date_to)
         self.session.add(accommodation)
         self.session.commit()
@@ -27,3 +29,6 @@ class AccommodationRepository:
         if accommodation:
             self.session.delete(accommodation)
             self.session.commit()
+
+    def get_accommodations_by_student_id(self, student_id):
+        return self.session.query(Accommodation).filter(Accommodation.student_id == student_id).first()

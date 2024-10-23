@@ -14,7 +14,7 @@ class Room(Base):
 
     id = Column(Integer, primary_key=True)
     dormitory_id = Column(Integer, ForeignKey('dormitories.id'), nullable=False)
-    room_number = Column(String(10), nullable=False)
+    room_number = Column(Integer, nullable=False)
     room_type = Column(Enum(RoomTypeEnum), nullable=False)
     bed_count = Column(Integer, nullable=False)
     occupied_beds = Column(Integer, default=0)

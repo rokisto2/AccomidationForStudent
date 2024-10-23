@@ -1,4 +1,6 @@
-from models import Student
+from sqlalchemy import func
+
+from models import Student, Violation
 from passlib.context import CryptContext
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -45,4 +47,7 @@ class StudentRepository:
             self.session.commit()
 
     def get_sorted_students(self):
-        return self.session.query(Student).order_by(Student.course, Student.violations).all()
+        return self.session.query(
+            Student,
+            func.count(Violation.id).label('violation_count')
+            ).outerjoin(Violation, Student.id == Violation.student_id).group_by(Student.id).order_by(Student.course,'violation_count').all()

@@ -1,21 +1,23 @@
+from datetime import date
+
 from sqlalchemy.orm import Session
+from sqlalchemy import join
+from sqlalchemy import func
+
+from db_manager import DBManager
+from models import Violation
 from models.student import Student, GenderEnum
 from models.room import Room, RoomTypeEnum
 from models.accommodation import Accommodation
+from repositories import StudentRepository
 
-
-
-def distribute_students(session: Session):
-    # Получаем всех студентов и сортируем по курсу и количеству нарушений
-    students = session.query(Student).order_by(Student.course, Student.violations).all()
-
-    # Получаем все комнаты
-    rooms = session.query(Room).all()
-
+def distribute_students(db_manager: DBManager):
+    students_with_violations = db_manager.students.get_sorted_students()
+    rooms = db_manager.rooms.get_all_rooms()
     accommodations = []
 
-    for student in students:
-        # Ищем подходящую комнату
+    for student_tuple in students_with_violations:
+        student = student_tuple[0]  # Extract the Student object from the tuple
         suitable_room = None
         for room in rooms:
             if room.room_type == RoomTypeEnum.male and student.gender == GenderEnum.male and room.occupied_beds < room.bed_count:
@@ -26,14 +28,10 @@ def distribute_students(session: Session):
                 break
 
         if suitable_room:
-            # Создаем запись о размещении
-            accommodation = Accommodation(student_id=student.id, room_id=suitable_room.id)
-            session.add(accommodation)
+            accommodation = Accommodation(student_id=student.id, room_id=suitable_room.id, date_from=date.today())
+            db_manager.accommodations.add_accommodation(student_id=student.id, room_id=suitable_room.id)
             accommodations.append(accommodation)
-
-            # Обновляем количество занятых мест в комнате
             suitable_room.occupied_beds += 1
-            session.commit()
         else:
             print(f"No suitable room found for student {student.id}")
 
