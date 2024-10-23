@@ -57,3 +57,19 @@ def distribute_students():
     with db_manager.session() as session:
         accommodations = distributeStudents.distribute_students(session)
         return accommodations
+
+
+@router.delete("/evict/{student_id}", response_model=AccommodationResponse)
+def evict_student(student_id: int):
+    accommodation = db_manager.accommodations.get_accommodation_by_student_id(student_id)
+    if not accommodation:
+        raise HTTPException(status_code=404, detail="Accommodation not found")
+
+    # Update the room's occupied beds count
+    room = db_manager.rooms.get_room_by_id(accommodation.room_id)
+    if room:
+        room.occupied_beds -= 1
+        db_manager.rooms.update_room(room.id, occupied_beds=room.occupied_beds)
+
+    db_manager.accommodations.delete_accommodation(accommodation.id)
+    return accommodation
