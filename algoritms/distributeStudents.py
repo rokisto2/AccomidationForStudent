@@ -17,7 +17,7 @@ def distribute_students(db_manager: DBManager):
     accommodations = []
 
     for student_tuple in students_with_violations:
-        student = student_tuple[0]  # Extract the Student object from the tuple
+        student = student_tuple[0]
         suitable_room = None
         for room in rooms:
             if room.room_type == RoomTypeEnum.male and student.gender == GenderEnum.male and room.occupied_beds < room.bed_count:

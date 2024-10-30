@@ -1,7 +1,7 @@
 import requests
 from PySide6.QtWidgets import QApplication, QMainWindow, QMessageBox
 import sys
-from transferDesign.ui_login import Ui_MainWindow # Импортируйте сгенерированный файл напрямую
+from App.transferDesign.ui_login import Ui_MainWindow # Импортируйте сгенерированный файл напрямую
 
 class LoginWindow(QMainWindow):
     def __init__(self):
@@ -15,9 +15,15 @@ class LoginWindow(QMainWindow):
     def handle_login(self):
         username = self.ui.mail.text()
         password = self.ui.password.text()
-        role = "student"  # Роль по умолчанию, можно добавить QComboBox для выбора роли
+        role = "student"
+        if self.ui.radioStudent.isChecked():
+            role = "student"
+        elif self.ui.radioAdministration.isChecked():
+            role = "administrator"
+        elif self.ui.radioDeaneryStaff.isChecked():
+            role = "deanery_staff"
 
-        # Отправьте запрос к API для проверки учетных данных
+
         response = requests.post("http://localhost:8000/api/auth/token", data={"username": username, "password": password, "scope": role})
 
         if response.status_code == 200:

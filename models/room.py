@@ -8,7 +8,6 @@ class RoomTypeEnum(enum.Enum):
     female = "female"
     family = "family"
 
-
 class Room(Base):
     __tablename__ = 'rooms'
 
@@ -19,11 +18,9 @@ class Room(Base):
     bed_count = Column(Integer, nullable=False)
     occupied_beds = Column(Integer, default=0)
 
-    # Relationship with dormitory
     dormitory = relationship('Dormitory', back_populates='rooms')
 
-    # Relationship with accommodations
-    accommodations = relationship('Accommodation', back_populates='room')
+    accommodations = relationship('Accommodation', back_populates='room', cascade='all, delete-orphan')
 
     def __repr__(self):
         return f"<Room(id={self.id}, dormitory={self.dormitory.name}, room_number={self.room_number}, bed_count={self.bed_count})>"
