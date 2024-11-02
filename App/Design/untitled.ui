@@ -86,8 +86,8 @@
    <widget class="QPushButton" name="loginButton">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>460</y>
+      <x>40</x>
+      <y>490</y>
       <width>301</width>
       <height>41</height>
      </rect>
@@ -111,35 +111,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QPushButton" name="loginButton_2">
-    <property name="geometry">
-     <rect>
-      <x>30</x>
-      <y>510</y>
-      <width>301</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Ubuntu Mono</family>
-      <pointsize>22</pointsize>
-     </font>
-    </property>
-    <property name="text">
-     <string>Зарегистрироваться</string>
-    </property>
-    <property name="checkable">
-     <bool>false</bool>
-    </property>
-    <property name="checked">
-     <bool>false</bool>
-    </property>
-    <property name="autoDefault">
-     <bool>false</bool>
-    </property>
-   </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>30</x>
